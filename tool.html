@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaToolsHub - Free Background Remover & PDF Converter Online</title>
+    <meta name="description"
+        content="Free online AI-powered tool to remove image backgrounds and convert JPG/PNG to PDF. Fast, high-quality, and privacy-focused image utility.">
+    <meta name="keywords"
+        content="AI image tool, background remover, remove background, image to PDF, JPG to PDF, PNG to PDF, free image editor, online image tools, transparent background, PDF converter">
+    <meta name="author" content="InstaToolsHub">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.yourwebsite.com/"> <!-- REPLACE with your actual website URL -->
+    <meta property="og:title" content="InstaToolsHub - Free Background Remover & PDF Converter Online">
+    <meta property="og:description"
+        content="Free online AI-powered tool to remove image backgrounds and convert JPG/PNG to PDF. Fast, high-quality, and privacy-focused image utility.">
+    <meta property="og:image" content="https://www.yourwebsite.com/og-image.jpg">
+    <!-- REPLACE with a relevant image URL -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.yourwebsite.com/"> <!-- REPLACE with your actual website URL -->
+    <meta property="twitter:title" content="InstaToolsHub - Free Background Remover & PDF Converter Online">
+    <meta property="twitter:description"
+        content="Free online AI-powered tool to remove image backgrounds and convert JPG/PNG to PDF. Fast, high-quality, and privacy-focused image utility.">
+    <meta property="twitter:image" content="https://www.yourwebsite.com/twitter-image.jpg">
+    <!-- REPLACE with a relevant image URL -->
+
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- jsPDF CDN for Image to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Custom styles and animations */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Dark mode transition for overall body */
+        html.dark body {
+            background-color: #1a202c;
+            /* Tailwind dark:bg-gray-900 */
+            color: #e2e8f0;
+            /* Tailwind dark:text-gray-100 */
+        }
+
+        /* Glassmorphism effect */
+        .glassmorphism {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        html.dark .glassmorphism {
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(55, 65, 81, 0.5);
+            /* Tailwind dark:border-gray-700 */
+        }
+
+        /* Fade-in animation for Hero section */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Checkered background for transparency simulation */
+        .checkered-bg {
+            background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #ccc 75%),
+                linear-gradient(-45deg, transparent 75%, #ccc 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, 10px 0px;
+        }
+
+        html.dark .checkered-bg {
+            background-image: linear-gradient(45deg, #4a5568 25%, transparent 25%),
+                /* Tailwind dark:bg-gray-600 */
+                linear-gradient(-45deg, #4a5568 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #4a5568 75%),
+                linear-gradient(-45deg, transparent 75%, #4a5568 75%);
+        }
+
+        /* Dark mode overrides for Bootstrap components and general Tailwind classes */
+        html.dark .bg-white {
+            background-color: #2d3748 !important;
+        }
+
+        /* dark:bg-gray-800 */
+        html.dark .text-gray-900 {
+            color: #e2e8f0 !important;
+        }
+
+        /* dark:text-gray-100 */
+        html.dark .text-gray-700 {
+            color: #cbd5e0 !important;
+        }
+
+        /* dark:text-gray-300 */
+        html.dark .text-gray-600 {
+            color: #a0aec0 !important;
+        }
+
+        /* dark:text-gray-400 */
+        html.dark .text-gray-500 {
+            color: #a0aec0 !important;
+        }
+
+        /* dark:text-gray-400 */
+        html.dark .border-gray-200 {
+            border-color: #4a5568 !important;
+        }
+
+        /* dark:border-gray-600 */
+        html.dark .border-gray-300 {
+            border-color: #4a5568 !important;
+        }
+
+        /* dark:border-gray-600 */
+        html.dark .bg-gray-100 {
+            background-color: #2d3748 !important;
+        }
+
+        /* dark:bg-gray-800 */
+        html.dark .bg-gray-50 {
+            background-color: #1a202c !important;
+        }
+
+        /* dark:bg-gray-900 */
+        html.dark .bg-gray-200 {
+            background-color: #4a5568 !important;
+        }
+
+        /* dark:bg-gray-700 */
+        html.dark .bg-gray-900 {
+            background-color: #000000 !important;
+        }
+
+        /* dark:bg-black */
+        html.dark .text-white {
+            color: #e2e8f0 !important;
+        }
+
+        /* Ensure white text stays light in dark mode */
+        html.dark .text-indigo-600 {
+            color: #818cf8 !important;
+        }
+
+        /* dark:text-indigo-400 */
+        html.dark .text-indigo-500 {
+            color: #a78bfa !important;
+        }
+
+        /* dark:text-purple-400 */
+        html.dark .text-green-500 {
+            color: #86efac !important;
+        }
+
+        /* dark:text-green-400 */
+        html.dark .text-purple-600 {
+            color: #c084fc !important;
+        }
+
+        /* dark:text-purple-400 */
+        html.dark .text-red-500 {
+            color: #fca5a5 !important;
+        }
+
+        /* dark:text-red-400 */
+        html.dark .shadow-xl {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        html.dark .shadow-lg {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        html.dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        /* Specific Bootstrap overrides for dark mode */
+        html.dark .modal-content {
+            background-color: #2d3748 !important;
+            border-color: #4a5568 !important;
+        }
+
+        html.dark .modal-header,
+        html.dark .modal-body,
+        html.dark .modal-footer {
+            border-color: #4a5568 !important;
+        }
+
+        html.dark .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%) !important;
+        }
+
+        html.dark .form-control {
+            background-color: #4a5568 !important;
+            color: #e2e8f0 !important;
+            border-color: #4a5568 !important;
+        }
+
+        html.dark .form-control::placeholder {
+            color: #a0aec0 !important;
+        }
+
+        html.dark .card {
+            background-color: #2d3748 !important;
+            border-color: #4a5568 !important;
+        }
+
+        html.dark .card-body {
+            background-color: #2d3748 !important;
+        }
+
+        html.dark .card-header {
+            background-color: #2d3748 !important;
+        }
+
+        html.dark .card-title {
+            color: #e2e8f0 !important;
+        }
+
+        html.dark .list-group-item {
+            background-color: #2d3748 !important;
+            color: #e2e8f0 !important;
+            border-color: #4a5568 !important;
+        }
+
+        html.dark #pricing .border-indigo-500.ring-2.ring-indigo-500 {
+            border-color: #818cf8 !important;
+            box-shadow: 0 0 0 2px #818cf8 !important;
+        }
+
+        /* Tool specific styling */
+        .tool-content.hidden {
+            display: none;
+        }
+
+        .tool-nav-button.active {
+            @apply bg-indigo-600 text-white;
+        }
+
+        html.dark .tool-nav-button.active {
+            @apply dark:bg-indigo-700 dark:text-white;
+        }
+
+        .pdf-thumbnail-item {
+            position: relative;
+            cursor: grab;
+            user-select: none;
+            border: 2px solid transparent;
+        }
+
+        .pdf-thumbnail-item:hover {
+            border-color: #6366f1;
+            /* indigo-500 */
+        }
+
+        .pdf-thumbnail-item.dragging {
+            opacity: 0.5;
+            border-color: #a78bfa;
+            /* purple-400 */
+        }
+
+        .pdf-thumbnail-item .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            /* red-500 */
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300">
+
+    <!-- Header -->
+            </button>
+    </header>
+
+    <main>
+
+
+        <!-- Tools Section -->
+        <section id="tools" class="py-16 px-4 md:px-12 bg-gray-100 transition-colors duration-300">
+            <h2 class="text-4xl font-extrabold text-center mb-12 text-gray-900">
+                Our Powerful Tools
+            </h2>
+            <div class="max-w-6xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+                <!-- Tool Navigation -->
+                <div class="flex justify-center mb-8 space-x-4">
+                    <button id="bgRemoverTabBtn"
+                        class="tool-nav-button px-6 py-3 rounded-full text-lg font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200 active">
+                        Background Remover
+                    </button>
+                    <button id="imageToPdfTabBtn"
+                        class="tool-nav-button px-6 py-3 rounded-full text-lg font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors duration-200">
+                        Image to PDF
+                    </button>
+                </div>
+
+                <!-- Background Remover Tool Content -->
+                <div id="bgRemoverTool" class="tool-content">
+                    <div id="bgRemoverDropArea"
+                        class="border-2 border-dashed border-indigo-400 rounded-xl p-10 text-center cursor-pointer hover:border-indigo-600 transition-all duration-300 mb-8">
+                        <input type="file" id="bgRemoverFileInput" accept="image/jpeg, image/png" class="hidden">
+                        <svg class="mx-auto h-16 w-16 text-indigo-500 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 002.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <p class="text-lg text-gray-600 mb-2">
+                            Drag & Drop your image here, or <span class="font-semibold text-indigo-600">click to
+                                upload</span>
+                        </p>
+                        <p class="text-sm text-gray-500">JPG or PNG up to 10MB</p>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <p class="text-lg font-medium text-gray-700">
+                            <span id="bgRemoverUsageText"></span>
+                        </p>
+                        <p id="bgRemoverLimitReachedMessage" class="text-red-500 mt-2 font-semibold hidden">
+                            You've reached your limit. Please upgrade for more removals!
+                        </p>
+                        <p id="bgRemoverApiErrorMessage" class="text-red-600 mt-2 font-semibold hidden">
+                            <!-- API error messages will be displayed here -->
+                        </p>
+                    </div>
+
+                    <div id="bgRemoverImageComparison" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 hidden">
+                        <div class="relative bg-gray-100 rounded-lg overflow-hidden shadow-md border border-gray-200">
+                            <h3
+                                class="absolute top-2 left-2 px-3 py-1 bg-white/70 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-800 z-10">
+                                Original</h3>
+                            <img id="bgRemoverOriginalImage" src="" alt="Original Image"
+                                class="w-full h-auto object-contain max-h-96 rounded-lg">
+                        </div>
+
+                        <div class="relative bg-gray-100 rounded-lg overflow-hidden shadow-md border border-gray-200">
+                            <h3
+                                class="absolute top-2 left-2 px-3 py-1 bg-white/70 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-800 z-10">
+                                Background Removed</h3>
+                            <div id="bgRemoverProcessedImageContainer" class="relative w-full h-auto max-h-96">
+                                <div class="absolute inset-0 checkered-bg"></div>
+                                <img id="bgRemoverProcessedImage" src="" alt="Background Removed Image"
+                                    class="relative w-full h-auto object-contain max-h-96 rounded-lg">
+                            </div>
+                            <div id="bgRemoverProcessingLoader"
+                                class="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 animate-pulse rounded-lg hidden">
+                                <svg class="animate-spin h-10 w-10 text-indigo-500 mb-4"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                                <p class="text-gray-600">Processing...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bgRemoverDownloadSection" class="text-center mt-8 hidden">
+                        <button id="bgRemoverDownloadBtn"
+                            class="btn btn-primary bg-indigo-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-lg transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                            Download PNG
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Image to PDF Converter Tool Content -->
+                <div id="imageToPdfTool" class="tool-content hidden">
+                    <div id="pdfDropArea"
+                        class="border-2 border-dashed border-purple-400 rounded-xl p-10 text-center cursor-pointer hover:border-purple-600 transition-all duration-300 mb-8">
+                        <input type="file" id="pdfFileInput" accept="image/jpeg, image/png" multiple class="hidden">
+                        <svg class="mx-auto h-16 w-16 text-purple-500 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 0115.9 6L16 6a3 3 0 013 3v10a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h1">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6">
+                            </path>
+                        </svg>
+                        <p class="text-lg text-gray-600 mb-2">
+                            Drag & Drop multiple images here, or <span class="font-semibold text-purple-600">click to
+                                upload</span>
+                        </p>
+                        <p class="text-sm text-gray-500">JPG or PNG (multiple files allowed)</p>
+                    </div>
+
+                    <div id="pdfThumbnailsContainer" class="flex flex-wrap gap-4 justify-center mb-8 hidden">
+                        <!-- Image thumbnails will be rendered here -->
+                    </div>
+
+                    <div id="pdfOptions" class="mb-8 hidden">
+                        <h3 class="text-xl font-bold mb-4 text-gray-900">PDF Layout Options:</h3>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pdfLayout" value="a4" checked
+                                    class="form-radio text-purple-600">
+                                <span class="text-gray-700">Fit to A4</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pdfLayout" value="original"
+                                    class="form-radio text-purple-600">
+                                <span class="text-gray-700">Original Size</span>
+                            </label>
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="radio" name="pdfLayout" value="grid" class="form-radio text-purple-600">
+                                <span class="text-gray-700">Grid View (4 per page)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="pdfConvertSection" class="text-center hidden">
+                        <button id="convertToPdfBtn"
+                            class="btn btn-primary bg-purple-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-700 transition-all duration-300 shadow-lg transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50">
+                            Convert to PDF
+                        </button>
+                    </div>
+                    <p id="pdfErrorMessage" class="text-red-600 mt-4 text-center font-semibold hidden">
+                        <!-- PDF conversion error messages will be displayed here -->
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+    <!-- Upgrade Plan Modal (Bootstrap Modal) -->
+    <div class="modal fade" id="upgradeModal" tabindex="-1" aria-labelledby="upgradeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content rounded-2xl shadow-2xl border border-gray-200">
+                <div class="modal-header border-0 pb-0">
+                    <h2 class="modal-title text-3xl font-bold text-center w-100 text-gray-900" id="upgradeModalLabel">
+                        Upgrade Your Plan</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-8 pt-0">
+                    <p class="text-center text-lg text-gray-700 mb-8">
+                        You've reached your free limit. Please upgrade to continue!
+                    </p>
+
+                    <div id="planSelectionSection">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Free Plan Card (in modal) -->
+                            <div
+                                class="card bg-gray-50 rounded-xl shadow-md flex flex-col items-center text-center border border-gray-200">
+                                <div class="card-body p-6">
+                                    <h3 class="card-title text-2xl font-bold mb-3 text-gray-900">Free</h3>
+                                    <p class="text-4xl font-extrabold text-indigo-600 mb-2">
+                                        ₹0<span class="text-lg font-medium text-gray-500">/ month</span>
+                                    </p>
+                                    <p class="text-gray-600 mb-6">2 Background Removals</p>
+                                    <button
+                                        class="btn btn-secondary w-full bg-gray-300 text-gray-700 px-6 py-3 rounded-full text-lg font-semibold cursor-not-allowed shadow-md">
+                                        Current Plan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Pro Plan Card (in modal) -->
+                            <div
+                                class="card bg-gray-50 rounded-xl shadow-md flex flex-col items-center text-center border border-gray-200">
+                                <div class="card-body p-6">
+                                    <h3 class="card-title text-2xl font-bold mb-3 text-gray-900">Pro</h3>
+                                    <p class="text-4xl font-extrabold text-indigo-600 mb-2">
+                                        ₹49<span class="text-lg font-medium text-gray-500">/ month</span>
+                                    </p>
+                                    <p class="text-gray-600 mb-6">50 Background Removals</p>
+                                    <a href="https://imjo.in/ndsFQa" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-primary w-full bg-indigo-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 shadow-md transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                                        Buy Pro Plan
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Unlimited Plan Card (in modal) -->
+                            <div
+                                class="card bg-gray-50 rounded-xl shadow-md flex flex-col items-center text-center border border-gray-200">
+                                <div class="card-body p-6">
+                                    <h3 class="card-title text-2xl font-bold mb-3 text-gray-900">Unlimited</h3>
+                                    <p class="text-4xl font-extrabold text-indigo-600 mb-2">
+                                        ₹199<span class="text-lg font-medium text-gray-500">/ month</span>
+                                    </p>
+                                    <p class="text-gray-600 mb-6">Unlimited Background Removals</p>
+                                    <a href="https://imjo.in/Pzr9hT" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-primary w-full bg-purple-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-purple-700 transition-all duration-300 shadow-md transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50">
+                                        Buy Unlimited Plan
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="showUnlockAccessBtn"
+                                class="btn btn-link text-indigo-600 hover:text-indigo-800 transition-colors duration-200">
+                                Already Paid? Unlock Access
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="unlockAccessSection" class="hidden mt-4">
+                        <h3 class="text-xl font-bold mb-4 text-gray-900 text-center">Enter Access Code</h3>
+                        <div class="input-group mb-3">
+                            <input type="text" id="accessCodeInput" class="form-control"
+                                placeholder="Access Code (e.g., PRO50 or UNLIMITED123)" aria-label="Access Code">
+                            <button class="btn btn-primary bg-indigo-600 text-white" type="button"
+                                id="unlockCodeBtn">Unlock</button>
+                        </div>
+                        <div id="unlockMessage" class="alert hidden" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS CDN (Bundle includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // --- Global State Variables ---
+        let currentTool = 'bgRemover'; // 'bgRemover' or 'imageToPdf'
+        let isDarkMode = false;
+        let bgPlan = 'free'; // 'free', 'pro', 'unlimited'
+        let bgRemoverCount = 0;
+
+        // Dynamic MAX_BG_REMOVALS based on plan
+        function getMaxRemovals() {
+            if (bgPlan === 'pro') return 50;
+            if (bgPlan === 'unlimited') return Infinity; // Effectively unlimited
+            return 2; // Free plan
+        }
+
+        const REMOVE_BG_API_KEY = "DqCUHZjbU4Jccf1Zb5t6jQ8g"; // <<-- REPLACE WITH YOUR ACTUAL REMOVE.BG API KEY
+        // Instamojo dummy link base (REPLACE with your actual Instamojo link base)
+        const INSTAMOJO_BASE_URL = "https://www.instamojo.com/@yourlink"; // Example: "https://www.instamojo.com/@myutilityapp"
+        const YOUR_WEBSITE_BASE_URL = "https://yourwebsite.vercel.app"; // REPLACE with your actual hosted website base URL (e.g., "https://www.myutilityapp.com")
+
+
+        // Background Remover State (image data URLs and processing status)
+        let bgRemoverUploadedImage = null;
+        let bgRemoverProcessedImage = null;
+        let bgRemoverIsProcessing = false;
+
+        // Image to PDF State
+        let pdfImages = []; // Stores { file, dataURL } objects
+        let pdfLayoutMode = 'a4'; // 'a4', 'original', 'grid'
+
+        // --- DOM Elements ---
+        // Declare all DOM elements with 'let' at the top level
+        let htmlElement, tryNowBtn, toolsSection, currentPlanDisplay;
+        let bgRemoverTabBtn, imageToPdfTabBtn, bgRemoverTool, imageToPdfTool;
+        let bgRemoverDropArea, bgRemoverFileInput, bgRemoverCountTracker, bgRemoverLimitReachedMessage, bgRemoverApiErrorMessage, bgRemoverImageComparison, bgRemoverOriginalImageElement, bgRemoverProcessedImageElement, bgRemoverProcessingLoader, bgRemoverDownloadSection, bgRemoverDownloadBtn;
+        let pdfDropArea, pdfFileInput, pdfThumbnailsContainer, pdfOptions, pdfLayoutRadios, convertToPdfBtn, pdfErrorMessage;
+        let contactForm, contactSubmitBtn, submitSpinner, formMessage, formError;
+        let planSelectionSection, unlockAccessSection, showUnlockAccessBtn, accessCodeInput, unlockCodeBtn, unlockMessage;
+
+
+        // Bootstrap Modal instance
+        let upgradeModalInstance;
+
+        // --- Helper Functions ---
+
+        // Function to update the UI based on current state
+        function updateUI() {
+
+            // Update current plan display in header
+            if (currentPlanDisplay) { // Null check
+                currentPlanDisplay.textContent = `Plan: ${bgPlan.charAt(0).toUpperCase() + bgPlan.slice(1)}`;
+                currentPlanDisplay.classList.remove('hidden'); // Ensure it's visible
+            }
+
+
+            // Update tool visibility
+            if (bgRemoverTool && imageToPdfTool && bgRemoverTabBtn && imageToPdfTabBtn) { // Null checks
+                if (currentTool === 'bgRemover') {
+                    bgRemoverTool.classList.remove('hidden');
+                    imageToPdfTool.classList.add('hidden');
+                    bgRemoverTabBtn.classList.add('active');
+                    imageToPdfTabBtn.classList.remove('active');
+                } else {
+                    bgRemoverTool.classList.add('hidden');
+                    imageToPdfTool.classList.remove('hidden');
+                    bgRemoverTabBtn.classList.remove('active');
+                    imageToPdfTabBtn.classList.add('active');
+                }
+            }
+
+
+            // --- Background Remover UI Updates ---
+            if (bgRemoverCountTracker && bgRemoverLimitReachedMessage && bgRemoverDropArea && bgRemoverUsageText) { // Null checks
+                const maxRemovalsForPlan = getMaxRemovals();
+                if (bgPlan === 'unlimited') {
+                    bgRemoverUsageText.textContent = `Unlimited Removals`;
+                    bgRemoverLimitReachedMessage.classList.add('hidden'); // Hide limit message for unlimited
+                    bgRemoverDropArea.classList.remove('cursor-not-allowed', 'opacity-50');
+                    bgRemoverDropArea.classList.add('cursor-pointer');
+                } else {
+                    bgRemoverUsageText.textContent = `You have used ${bgRemoverCount}/${maxRemovalsForPlan} removals.`;
+                    if (bgRemoverCount >= maxRemovalsForPlan) {
+                        bgRemoverLimitReachedMessage.classList.remove('hidden');
+                        bgRemoverDropArea.classList.add('cursor-not-allowed', 'opacity-50');
+                        bgRemoverDropArea.classList.remove('cursor-pointer');
+                    } else {
+                        bgRemoverLimitReachedMessage.classList.add('hidden');
+                        bgRemoverDropArea.classList.remove('cursor-not-allowed', 'opacity-50');
+                        bgRemoverDropArea.classList.add('cursor-pointer');
+                    }
+                }
+            }
+
+
+            if (bgRemoverApiErrorMessage) { // Null check
+                if (bgRemoverApiErrorMessage.textContent) {
+                    bgRemoverApiErrorMessage.classList.remove('hidden');
+                } else {
+                    bgRemoverApiErrorMessage.classList.add('hidden');
+                }
+            }
+
+
+            if (bgRemoverImageComparison) { // Null check
+                if (bgRemoverUploadedImage || bgRemoverIsProcessing) {
+                    bgRemoverImageComparison.classList.remove('hidden');
+                } else {
+                    bgRemoverImageComparison.classList.add('hidden');
+                }
+            }
+
+
+            if (bgRemoverProcessingLoader && bgRemoverProcessedImageElement && bgRemoverDownloadSection) { // Null checks
+                if (bgRemoverIsProcessing) {
+                    bgRemoverProcessingLoader.classList.remove('hidden');
+                    bgRemoverProcessedImageElement.classList.add('hidden');
+                    bgRemoverDownloadSection.classList.add('hidden');
+                } else {
+                    bgRemoverProcessingLoader.classList.add('hidden');
+                    if (bgRemoverProcessedImage) {
+                        bgRemoverProcessedImageElement.classList.remove('hidden');
+                        bgRemoverDownloadSection.classList.remove('hidden');
+                    } else {
+                        bgRemoverProcessedImageElement.classList.add('hidden');
+                        bgRemoverDownloadSection.classList.add('hidden');
+                    }
+                }
+            }
+
+
+            if (bgRemoverOriginalImageElement) { // Null check
+                if (bgRemoverUploadedImage) {
+                    bgRemoverOriginalImageElement.src = bgRemoverUploadedImage;
+                    bgRemoverOriginalImageElement.alt = "Original image for background removal"; // Add alt for SEO
+                } else {
+                    bgRemoverOriginalImageElement.src = '';
+                    bgRemoverOriginalImageElement.alt = "Original image placeholder";
+                }
+            }
+
+            if (bgRemoverProcessedImageElement) { // Null check
+                if (bgRemoverProcessedImage) {
+                    bgRemoverProcessedImageElement.src = bgRemoverProcessedImage;
+                    bgRemoverProcessedImageElement.alt = "Image with background removed"; // Add alt for SEO
+                } else {
+                    bgRemoverProcessedImageElement.src = '';
+                    bgRemoverProcessedImageElement.alt = "Processed image placeholder"; // Add alt for SEO
+                }
+            }
+
+
+            // --- Image to PDF UI Updates ---
+            if (pdfImages.length > 0) {
+                if (pdfThumbnailsContainer) pdfThumbnailsContainer.classList.remove('hidden'); // Null check
+                if (pdfOptions) pdfOptions.classList.remove('hidden'); // Null check
+                if (convertToPdfBtn) convertToPdfBtn.closest('div').classList.remove('hidden'); // Null check
+            } else {
+                if (pdfThumbnailsContainer) pdfThumbnailsContainer.classList.add('hidden'); // Null check
+                if (pdfOptions) pdfOptions.classList.add('hidden'); // Null check
+                if (convertToPdfBtn) convertToPdfBtn.closest('div').classList.add('hidden'); // Null check
+            }
+            if (pdfErrorMessage) { // Null check
+                if (pdfErrorMessage.textContent) {
+                    pdfErrorMessage.classList.remove('hidden');
+                } else {
+                    pdfErrorMessage.classList.add('hidden');
+                }
+            }
+        }
+
+        // Function to switch between tools
+        function switchTool(toolId) {
+            currentTool = toolId;
+            updateUI();
+        }
+
+        // --- Background Remover Logic ---
+
+        // Function to call remove.bg API
+        async function removeBackground(imageFile) {
+            if (!bgRemoverApiErrorMessage) return null; // Ensure element exists before using
+            bgRemoverApiErrorMessage.textContent = ''; // Clear previous errors
+            if (!REMOVE_BG_API_KEY || REMOVE_BG_API_KEY === "YOUR_API_KEY") {
+                bgRemoverApiErrorMessage.textContent = "Error: Please replace 'YOUR_API_KEY' with your actual remove.bg API key.";
+                updateUI();
+                return null;
+            }
+
+            const formData = new FormData();
+            formData.append('image_file', imageFile);
+            formData.append('size', 'auto'); // 'auto' for automatic size, or 'preview' for smaller output
+
+            try {
+                const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+                    method: 'POST',
+                    headers: {
+                        'X-Api-Key': REMOVE_BG_API_KEY,
+                    },
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    if (blob.type === 'image/png') {
+                        return URL.createObjectURL(blob);
+                    } else {
+                        const text = await blob.text();
+                        try {
+                            const errorJson = JSON.parse(text);
+                            bgRemoverApiErrorMessage.textContent = errorJson.errors ? `API Error: ${errorJson.errors[0].title}` : "Unknown API error.";
+                        } catch (e) {
+                            bgRemoverApiErrorMessage.textContent = "API returned non-image data or invalid JSON. " + text.substring(0, 100) + "...";
+                        }
+                        updateUI();
+                        return null;
+                    }
+                } else {
+                    const errorText = await response.text();
+                    try {
+                        const errorJson = JSON.parse(errorText);
+                        bgRemoverApiErrorMessage.textContent = errorJson.errors ? `API Error: ${errorJson.errors[0].title}` : `API Error: ${response.status} ${response.statusText}`;
+                    } catch (e) {
+                        bgRemoverApiErrorMessage.textContent = `API Error: ${response.status} ${response.statusText} - ${errorText.substring(0, 100) + '...'}`;
+                    }
+                    updateUI();
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error removing background:', error);
+                bgRemoverApiErrorMessage.textContent = 'Network error or API call failed. Please check your connection.';
+                updateUI();
+                return null;
+            }
+        }
+
+        // Handle image upload for Background Remover
+        async function handleBgImageUpload(file) {
+            if (!file) return;
+
+            const maxRemovalsForPlan = getMaxRemovals();
+
+            if (bgPlan !== 'unlimited' && bgRemoverCount >= maxRemovalsForPlan) {
+                if (upgradeModalInstance) upgradeModalInstance.show(); // Null check
+                return;
+            }
+
+            bgRemoverIsProcessing = true;
+            bgRemoverUploadedImage = null;
+            bgRemoverProcessedImage = null;
+            if (bgRemoverApiErrorMessage) bgRemoverApiErrorMessage.textContent = ''; // Null check
+            updateUI(); // Update UI to show loader and reset images
+
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                bgRemoverUploadedImage = reader.result;
+                if (bgRemoverOriginalImageElement) bgRemoverOriginalImageElement.src = bgRemoverUploadedImage; // Null check
+
+                const processedDataUrl = await removeBackground(file);
+                bgRemoverProcessedImage = processedDataUrl;
+                bgRemoverIsProcessing = false;
+
+                if (processedDataUrl) { // Only increment count if removal was successful
+                    if (bgPlan !== 'unlimited') { // Only count if not unlimited plan
+                        bgRemoverCount++;
+                        localStorage.setItem('bgRemoverCount', bgRemoverCount.toString());
+                    }
+                }
+                updateUI(); // Update UI with processed image and new count
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Handle file input change for Background Remover
+        function handleBgRemoverFileChange(event) {
+            const file = event.target.files[0];
+            if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+                handleBgImageUpload(file);
+            } else {
+                if (bgRemoverApiErrorMessage) bgRemoverApiErrorMessage.textContent = 'Please upload a JPG or PNG image.'; // Null check
+                updateUI();
+            }
+        }
+
+        // Drag-and-drop handlers for Background Remover
+        function handleBgRemoverDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.dataTransfer.dropEffect = 'copy';
+            if (bgRemoverDropArea) bgRemoverDropArea.classList.add('border-indigo-800', 'scale-105'); // Null check
+        }
+        function handleBgRemoverDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (bgRemoverDropArea) bgRemoverDropArea.classList.remove('border-indigo-800', 'scale-105'); // Null check
+        }
+        function handleBgRemoverDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (bgRemoverDropArea) bgRemoverDropArea.classList.remove('border-indigo-800', 'scale-105'); // Null check
+            const file = event.dataTransfer.files[0];
+            if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+                handleBgImageUpload(file);
+            } else {
+                if (bgRemoverApiErrorMessage) bgRemoverApiErrorMessage.textContent = 'Please drop a JPG or PNG image file.'; // Null check
+                updateUI();
+            }
+        }
+
+        // Handle download for Background Remover
+        function handleBgRemoverDownload() {
+            if (bgRemoverProcessedImage) {
+                const link = document.createElement('a');
+                link.href = bgRemoverProcessedImage;
+                link.download = 'background-removed-image.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(bgRemoverProcessedImage); // Clean up memory
+            }
+        }
+
+        // --- Image to PDF Logic ---
+
+        // Render PDF image thumbnails
+        function renderPdfThumbnails() {
+            if (!pdfThumbnailsContainer) return; // Null check
+            pdfThumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
+            if (pdfImages.length === 0) {
+                updateUI();
+                return;
+            }
+
+            pdfImages.forEach((img, index) => {
+                const imgWrapper = document.createElement('div');
+                imgWrapper.className = 'pdf-thumbnail-item p-2 rounded-lg shadow-md bg-gray-100 flex flex-col items-center';
+                imgWrapper.draggable = true; // Make draggable for reordering
+                imgWrapper.dataset.index = index;
+
+                const imgElement = document.createElement('img');
+                imgElement.src = img.dataURL;
+                imgElement.alt = `PDF Image ${index + 1}`; // Add alt for SEO
+                imgElement.className = 'w-24 h-24 object-contain mb-2 rounded';
+
+                const removeBtn = document.createElement('span');
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = 'x';
+                removeBtn.onclick = (e) => {
+                    e.stopPropagation(); // Prevent drag from triggering on remove button
+                    pdfImages.splice(index, 1); // Remove image from array
+                    renderPdfThumbnails(); // Re-render thumbnails
+                };
+
+                imgWrapper.appendChild(imgElement);
+                imgWrapper.appendChild(removeBtn);
+                pdfThumbnailsContainer.appendChild(imgWrapper);
+            });
+            updateUI(); // Update UI visibility
+        }
+
+        // Handle file input change for PDF Converter
+        function handlePdfFileInputChange(event) {
+            if (!pdfErrorMessage) return; // Null check
+            pdfErrorMessage.textContent = ''; // Clear previous errors
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+
+            files.forEach(file => {
+                if (file.type === 'image/jpeg' || file.type === 'image/png') {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        pdfImages.push({ file: file, dataURL: reader.result });
+                        renderPdfThumbnails();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    pdfErrorMessage.textContent = 'Only JPG or PNG images are allowed for PDF conversion.';
+                    updateUI();
+                }
+            });
+            event.target.value = ''; // Clear file input
+        }
+
+        // Drag-and-drop handlers for PDF Converter
+        function handlePdfDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.dataTransfer.dropEffect = 'copy';
+            if (pdfDropArea) pdfDropArea.classList.add('border-purple-800', 'scale-105'); // Null check
+        }
+        function handlePdfDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (pdfDropArea) pdfDropArea.classList.remove('border-purple-800', 'scale-105'); // Null check
+        }
+        function handlePdfDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (pdfDropArea) pdfDropArea.classList.remove('border-purple-800', 'scale-105'); // Null check
+            const files = Array.from(event.dataTransfer.files);
+            if (files.length > 0) {
+                handlePdfImageUpload(files);
+            } else {
+                if (pdfErrorMessage) pdfErrorMessage.textContent = 'Please drop JPG or PNG image files.'; // Null check
+                updateUI();
+            }
+        }
+        function handlePdfImageUpload(files) {
+            if (!pdfErrorMessage) return; // Null check
+            pdfErrorMessage.textContent = ''; // Clear previous errors
+            files.forEach(file => {
+                if (file.type === 'image/jpeg' || file.type === 'image/png') {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        pdfImages.push({ file: file, dataURL: reader.result });
+                        renderPdfThumbnails();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    pdfErrorMessage.textContent = 'Only JPG or PNG images are allowed for PDF conversion.';
+                    updateUI();
+                }
+            });
+        }
+
+
+        // Reordering logic for PDF thumbnails (Drag and Drop)
+        let dragStartIndex = -1;
+
+        // Event listener for dragstart on pdfThumbnailsContainer is added inside DOMContentLoaded
+        // Event listener for dragover on pdfThumbnailsContainer is added inside DOMContentLoaded
+        // Event listener for dragend on pdfThumbnailsContainer is added inside DOMContentLoaded
+
+
+        // Convert images to PDF
+        async function convertToPdf() {
+            if (!pdfErrorMessage) return; // Null check
+            pdfErrorMessage.textContent = ''; // Clear previous errors
+            if (pdfImages.length === 0) {
+                pdfErrorMessage.textContent = 'Please upload images first to convert to PDF.';
+                updateUI();
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                unit: 'pt', // points
+                format: 'a4' // default format
+            });
+
+            const A4_WIDTH = 595.28; // A4 width in points
+            const A4_HEIGHT = 841.89; // A4 height in points
+
+            for (let i = 0; i < pdfImages.length; i++) {
+                const img = pdfImages[i];
+                const imgData = img.dataURL;
+
+                // Get image dimensions
+                const imgElement = new Image();
+                imgElement.src = imgData;
+                await new Promise(resolve => imgElement.onload = resolve); // Wait for image to load
+
+                const imgWidth = imgElement.naturalWidth;
+                const imgHeight = imgElement.naturalHeight;
+
+                if (i > 0 && pdfLayoutMode !== 'grid') { // Add new page for each image unless it's grid mode and not the first image
+                    doc.addPage();
+                }
+
+                if (pdfLayoutMode === 'a4') {
+                    // Fit to A4 page
+                    const ratio = Math.min(A4_WIDTH / imgWidth, A4_HEIGHT / imgHeight);
+                    const scaledWidth = imgWidth * ratio;
+                    const scaledHeight = imgHeight * ratio;
+                    const x = (A4_WIDTH - scaledWidth) / 2;
+                    const y = (A4_HEIGHT - scaledHeight) / 2;
+                    doc.addImage(imgData, 'PNG', x, y, scaledWidth, scaledHeight);
+                } else if (pdfLayoutMode === 'original') {
+                    // Add image at original size, potentially spanning multiple pages
+                    let currentY = 0;
+                    while (currentY < imgHeight) {
+                        const remainingHeight = imgHeight - currentY;
+                        const pageHeight = Math.min(A4_HEIGHT, remainingHeight);
+                        if (currentY > 0) {
+                            doc.addPage();
+                        }
+                        doc.addImage(imgData, 'PNG', 0, -currentY, imgWidth, imgHeight); // Use negative Y to position correctly
+                        currentY += A4_HEIGHT;
+                    }
+                } else if (pdfLayoutMode === 'grid') {
+                    // Grid view (4 images per page)
+                    const imagesPerPage = 4;
+                    const gridIndex = i % imagesPerPage;
+                    const pageNum = Math.floor(i / imagesPerPage);
+
+                    if (gridIndex === 0 && pageNum > 0) { // Add new page if starting a new grid page
+                        doc.addPage();
+                    }
+
+                    const cellWidth = A4_WIDTH / 2;
+                    const cellHeight = A4_HEIGHT / 2;
+
+                    const row = Math.floor(gridIndex / 2);
+                    const col = gridIndex % 2;
+
+                    const x = col * cellWidth;
+                    const y = row * cellHeight;
+
+                    const padding = 20; // Padding inside each grid cell
+                    const imgFitWidth = cellWidth - 2 * padding;
+                    const imgFitHeight = cellHeight - 2 * padding;
+
+                    const ratio = Math.min(imgFitWidth / imgWidth, imgFitHeight / imgHeight);
+                    const scaledWidth = imgWidth * ratio;
+                    const scaledHeight = imgHeight * ratio;
+
+                    const imgX = x + (cellWidth - scaledWidth) / 2;
+                    const imgY = y + (cellHeight - scaledHeight) / 2;
+
+                    doc.addImage(imgData, 'PNG', imgX, imgY, scaledWidth, scaledHeight);
+                }
+            }
+
+            doc.save('converted-images.pdf');
+            pdfErrorMessage.textContent = 'PDF generated successfully!';
+            updateUI();
+        }
+
+        // --- General UI & Event Handlers ---
+
+
+
+        // Smooth scroll to tools section
+        function scrollToTools() {
+            if (toolsSection) toolsSection.scrollIntoView({ behavior: 'smooth' }); // Null check
+        }
+
+        // --- Initialization on DOMContentLoaded ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Bootstrap Modal
+            upgradeModalInstance = new bootstrap.Modal(document.getElementById('upgradeModal'), {});
+
+            // Assign DOM elements inside DOMContentLoaded
+            htmlElement = document.documentElement;
+            tryNowBtn = document.getElementById('tryNowBtn');
+            toolsSection = document.getElementById('tools');
+            currentPlanDisplay = document.getElementById('currentPlanDisplay');
+
+            bgRemoverTabBtn = document.getElementById('bgRemoverTabBtn');
+            imageToPdfTabBtn = document.getElementById('imageToPdfTabBtn');
+            bgRemoverTool = document.getElementById('bgRemoverTool');
+            imageToPdfTool = document.getElementById('imageToPdfTool');
+
+            bgRemoverDropArea = document.getElementById('bgRemoverDropArea');
+            bgRemoverFileInput = document.getElementById('bgRemoverFileInput');
+            bgRemoverCountTracker = document.getElementById('bgRemoverCountTracker');
+            bgRemoverLimitReachedMessage = document.getElementById('bgRemoverLimitReachedMessage');
+            bgRemoverApiErrorMessage = document.getElementById('bgRemoverApiErrorMessage');
+            bgRemoverImageComparison = document.getElementById('bgRemoverImageComparison');
+            bgRemoverOriginalImageElement = document.getElementById('bgRemoverOriginalImage');
+            bgRemoverProcessedImageElement = document.getElementById('bgRemoverProcessedImage');
+            bgRemoverProcessingLoader = document.getElementById('bgRemoverProcessingLoader');
+            bgRemoverDownloadSection = document.getElementById('bgRemoverDownloadSection');
+            bgRemoverDownloadBtn = document.getElementById('bgRemoverDownloadBtn');
+
+            pdfDropArea = document.getElementById('pdfDropArea');
+            pdfFileInput = document.getElementById('pdfFileInput');
+            pdfThumbnailsContainer = document.getElementById('pdfThumbnailsContainer');
+            pdfOptions = document.getElementById('pdfOptions');
+            pdfLayoutRadios = document.querySelectorAll('input[name="pdfLayout"]');
+            convertToPdfBtn = document.getElementById('convertToPdfBtn');
+            pdfErrorMessage = document.getElementById('pdfErrorMessage');
+
+            contactForm = document.getElementById('contactForm');
+            contactSubmitBtn = document.getElementById('contactSubmitBtn');
+            submitSpinner = document.getElementById('submitSpinner');
+            formMessage = document.getElementById('formMessage');
+            formError = document.getElementById('formError');
+
+            // Upgrade Modal specific elements
+            planSelectionSection = document.getElementById('planSelectionSection');
+            unlockAccessSection = document.getElementById('unlockAccessSection');
+            showUnlockAccessBtn = document.getElementById('showUnlockAccessBtn');
+            accessCodeInput = document.getElementById('accessCodeInput');
+            unlockCodeBtn = document.getElementById('unlockCodeBtn');
+            unlockMessage = document.getElementById('unlockMessage');
+
+
+            // Initialize counts and plan from localStorage
+            const storedBgRemoverCount = localStorage.getItem('bgRemoverCount');
+            if (storedBgRemoverCount) {
+                bgRemoverCount = parseInt(storedBgRemoverCount, 10);
+            }
+            const storedBgPlan = localStorage.getItem('bgPlan');
+            if (storedBgPlan) {
+                bgPlan = storedBgPlan;
+            }
+
+            // Initial UI update
+            updateUI();
+
+            // --- Event Listeners ---
+            // Add event listeners with null checks
+            if (tryNowBtn) tryNowBtn.addEventListener('click', scrollToTools);
+            if (bgRemoverTabBtn) bgRemoverTabBtn.addEventListener('click', () => switchTool('bgRemover'));
+            if (imageToPdfTabBtn) imageToPdfTabBtn.addEventListener('click', () => switchTool('imageToPdf'));
+
+            if (bgRemoverDropArea) {
+                bgRemoverDropArea.addEventListener('click', () => {
+                    const maxRemovalsForPlan = getMaxRemovals();
+                    if (bgPlan === 'unlimited' || bgRemoverCount < maxRemovalsForPlan) {
+                        if (bgRemoverFileInput) bgRemoverFileInput.click();
+                    } else {
+                        if (upgradeModalInstance) upgradeModalInstance.show();
+                    }
+                });
+                bgRemoverDropArea.addEventListener('dragover', handleBgRemoverDragOver);
+                bgRemoverDropArea.addEventListener('dragleave', handleBgRemoverDragLeave);
+                bgRemoverDropArea.addEventListener('drop', handleBgRemoverDrop);
+            }
+            if (bgRemoverFileInput) bgRemoverFileInput.addEventListener('change', handleBgRemoverFileChange);
+            if (bgRemoverDownloadBtn) bgRemoverDownloadBtn.addEventListener('click', handleBgRemoverDownload);
+
+            if (pdfDropArea) {
+                pdfDropArea.addEventListener('click', () => { if (pdfFileInput) pdfFileInput.click(); });
+                pdfDropArea.addEventListener('dragover', handlePdfDragOver);
+                pdfDropArea.addEventListener('dragleave', handlePdfDragLeave);
+                pdfDropArea.addEventListener('drop', handlePdfDrop);
+            }
+            if (pdfFileInput) pdfFileInput.addEventListener('change', handlePdfFileInputChange);
+            if (convertToPdfBtn) convertToPdfBtn.addEventListener('click', convertToPdf);
+
+            pdfLayoutRadios.forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    pdfLayoutMode = event.target.value;
+                });
+            });
+
+            // Modal plan buttons (redirect to Instamojo)
+            // THESE ARE NOW ANCHOR TAGS, SO NO JS LISTENER NEEDED FOR REDIRECTION
+            // But we need listeners for the unlock flow within the modal
+            if (showUnlockAccessBtn) {
+                showUnlockAccessBtn.addEventListener('click', () => {
+                    if (planSelectionSection) planSelectionSection.classList.add('hidden');
+                    if (unlockAccessSection) unlockAccessSection.classList.remove('hidden');
+                    if (unlockMessage) unlockMessage.classList.add('hidden'); // Clear previous messages
+                    if (accessCodeInput) accessCodeInput.value = ''; // Clear input
+                });
+            }
+
+            if (unlockCodeBtn) {
+                unlockCodeBtn.addEventListener('click', () => {
+                    const code = accessCodeInput ? accessCodeInput.value.trim() : '';
+                    if (!unlockMessage) return; // Ensure unlockMessage exists
+
+                    unlockMessage.classList.remove('alert-success', 'alert-danger');
+                    unlockMessage.classList.add('hidden');
+
+                    if (code === "PRO50") {
+                        bgPlan = "pro";
+                        localStorage.setItem("bgPlan", "pro");
+                        bgRemoverCount = 0; // Reset count for new plan
+                        localStorage.setItem("bgRemoverCount", "0");
+                        unlockMessage.textContent = "Success! Your plan is now Pro (50 removals). Redirecting...";
+                        unlockMessage.classList.add('alert-success');
+                        unlockMessage.classList.remove('hidden');
+                        if (upgradeModalInstance) upgradeModalInstance.hide();
+                        updateUI(); // Update UI immediately
+                        setTimeout(() => { window.location.href = 'index.html'; }, 1500); // Redirect to homepage
+                    } else if (code === "UNLIMITED123") {
+                        bgPlan = "unlimited";
+                        localStorage.setItem("bgPlan", "unlimited");
+                        bgRemoverCount = 0; // Reset count for new plan
+                        localStorage.setItem("bgRemoverCount", "0");
+                        unlockMessage.textContent = "Success! Your plan is now Unlimited. Redirecting...";
+                        unlockMessage.classList.add('alert-success');
+                        unlockMessage.classList.remove('hidden');
+                        if (upgradeModalInstance) upgradeModalInstance.hide();
+                        updateUI(); // Update UI immediately
+                        setTimeout(() => { window.location.href = 'index.html'; }, 1500); // Redirect to homepage
+                    } else {
+                        unlockMessage.textContent = "Invalid Access Code. Please try again.";
+                        unlockMessage.classList.add('alert-danger');
+                        unlockMessage.classList.remove('hidden');
+                    }
+                });
+            }
+
+
+
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault(); // Prevent default form submission
+
+                    // Basic client-side validation
+                    const nameInput = document.getElementById('name');
+                    const emailInput = document.getElementById('email');
+                    const messageInput = document.getElementById('message');
+
+                    let isValid = true;
+                    if (nameInput && !nameInput.value.trim()) {
+                        nameInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else if (nameInput) {
+                        nameInput.classList.remove('is-invalid');
+                    }
+
+                    if (emailInput && (!emailInput.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim()))) {
+                        emailInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else if (emailInput) {
+                        emailInput.classList.remove('is-invalid');
+                    }
+
+                    if (messageInput && !messageInput.value.trim()) {
+                        messageInput.classList.add('is-invalid');
+                        isValid = false;
+                    } else if (messageInput) {
+                        messageInput.classList.remove('is-invalid');
+                    }
+
+                    if (!isValid) {
+                        if (formError) {
+                            formError.textContent = 'Please fill in all required fields correctly.';
+                            formError.classList.remove('hidden');
+                        }
+                        return;
+                    }
+
+                    if (contactSubmitBtn) contactSubmitBtn.disabled = true;
+                    if (submitSpinner) submitSpinner.classList.remove('hidden');
+                    if (formMessage) formMessage.classList.add('hidden'); // Hide previous messages
+                    if (formError) formError.classList.add('hidden');
+
+                    const form = e.target;
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: form.method,
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json' // Important for Formspree to return JSON
+                            }
+                        });
+
+                        if (response.ok) {
+                            if (formMessage) formMessage.classList.remove('hidden');
+                            form.reset();
+                            // Remove validation feedback after successful reset
+                            if (nameInput) nameInput.classList.remove('is-invalid');
+                            if (emailInput) emailInput.classList.remove('is-invalid');
+                            if (messageInput) messageInput.classList.remove('is-invalid');
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Formspree error:', errorData);
+                            if (formError) {
+                                formError.textContent = errorData.errors ? errorData.errors.map(err => err.message).join(', ') : 'There was an error sending your message. Please try again later.';
+                                formError.classList.remove('hidden');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Network or submission error:', error);
+                        if (formError) {
+                            formError.textContent = 'Network error or unable to connect to the form service. Please try again later.';
+                            formError.classList.remove('hidden');
+                        }
+                    } finally {
+                        if (contactSubmitBtn) contactSubmitBtn.disabled = false;
+                        if (submitSpinner) submitSpinner.classList.add('hidden');
+                    }
+
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
