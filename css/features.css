@@ -62,7 +62,7 @@ body.dark .dark-mode-toggle .sun {
 
 .switch-toggle input:checked + div {
   left: 28px;
-  background-color: rgb(19, 193, 232);
+  background-color: rgb(34, 203, 240);
 }
 
 .switch-toggle.outer div {
