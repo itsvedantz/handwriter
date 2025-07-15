@@ -117,7 +117,7 @@ app.get('/', (req, res) => {
 
 // Define authentication routes
 app.post(
-  '/login',
+  '/login.html',
   passport.authenticate('local', {
     successRedirect: '/home.html',
     failureRedirect: '/index.html'
