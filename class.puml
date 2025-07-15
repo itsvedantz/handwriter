@@ -1,0 +1,84 @@
+@startuml
+title Key JavaScript Modules Class-like Diagram
+
+' Main Application Controller/Orchestrator
+class App {
+    - pageEl: DOMElement
+    + initialize(): void
+    + toggleTheme(button: HTMLElement): void
+    + fetchGitHubContributors(): void
+}
+
+' Module: Image Generation
+class ImageGenerator {
+    + generateImages(): Promise<void>
+    + downloadAsPDF(): Promise<void>
+    + deleteAllImages(): void
+    - getImageElements(): NodeList
+    - appendImageToOutput(imgData: String): void
+    - generateAndAppend(htmlElement: HTMLElement, resolution: Number, effects: String): Promise<String>
+}
+
+' Module: Utility Helpers
+class Helpers {
+    + addFontFromFile(file: File): void
+    + formatText(event: Event): void
+    + addPaperFromFile(file: File): void
+    - processFile(file: File, type: String): Promise<String>
+    - appendCustomFont(fontName: String, fontUrl: String): void
+    - getReadableFileSize(bytes: Number): String
+    - makeTextContentPrintable(text: String): String
+}
+
+' Module: Drawing Utilities
+class Draw {
+    - diagramCanvas: HTMLCanvasElement
+    - canvasContext: CanvasRenderingContext2D
+    - isDrawing: boolean
+    - lastX: Number
+    - lastY: Number
+    + setInkColor(color: String): void
+    + toggleDrawCanvas(): void
+    + setupDrawingEvents(): void
+    + clearCanvas(): void
+    + addImageToCanvas(imgSrc: String): void
+    - startDrawing(e: MouseEvent | TouchEvent): void
+    - draw(e: MouseEvent | TouchEvent): void
+    - stopDrawing(): void
+}
+
+' Module: Page Settings Management
+class PageSettings {
+    + getFontSize(): Number
+    + getLetterSpacing(): Number
+    + getWordSpacing(): Number
+    + getTopPadding(): Number
+    + getInkColor(): String
+    + getPageSize(): String
+    + getPageEffects(): String
+    + getResolution(): Number
+    + isPaperMarginEnabled(): boolean
+    + isPaperLinesEnabled(): boolean
+    + getHandwritingFont(): String
+}
+
+' Relationships (represented as usage/dependency)
+App "1" --> "1" ImageGenerator : orchestrates
+App "1" --> "1" Helpers : utilizes
+App "1" --> "1" Draw : utilizes
+App "1" --> "1" PageSettings : utilizes
+
+ImageGenerator ..> Helpers : uses formatText
+ImageGenerator ..> PageSettings : retrieves settings
+ImageGenerator ..> HTML2Canvas : calls to convert HTML to image
+ImageGenerator ..> JsPDF : calls to create PDF
+
+Draw ..> PageSettings : retrieves ink color
+
+Helpers ..> PageSettings : may implicitly depend on font settings
+
+' External Libraries as Dependencies
+HTML2Canvas -[hidden]-> ImageGenerator : used by
+JsPDF -[hidden]-> ImageGenerator : used by
+
+@enduml

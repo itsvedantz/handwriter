@@ -1,6 +1,6 @@
 <p align="center">
-<img alt="Text-to-handwriting title image" src="https://res.cloudinary.com/vedant/image/upload/w_400/v1586015094/vedant2019/text-to-handwriting-title.png" /> 
-<br/><b><a href="https://vedant.github.io/text-to-handwriting/">https://vedant.github.io/text-to-handwriting/</a></b><br/><br/><img alt="NPM Version" src="https://img.shields.io/github/package-json/v/vedant/text-to-handwriting?style=for-the-badge&labelColor=black&logo=npm&color=darkred" /> <a href="#contributing"><img alt="Contributions Welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen?style=for-the-badge&labelColor=black&logo=github"></a> <br/><a href="https://github.com/vedant/text-to-handwriting/blob/master/LICENSE"> <img alt="GitHub License MIT" src="https://img.shields.io/github/license/vedant/text-to-handwriting?style=for-the-badge&labelColor=black&logo=github"> </a><a href="https://twitter.com/vedantcodes"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/vedantcodes?style=for-the-badge&color=09f&labelColor=black&logo=twitter&label=@vedantcodes"></a><br/><br/> I hate writing assignments so I made this tool that converts text to an image that looks like handwriting😛
+<img alt="Text-to-handwriting title image" src="https://camo.githubusercontent.com/67069f80bd5749a7d1977513a325baeb43e39d2dc3f832beaf39f2e59d3d78b8/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f736175726162686461776172652f696d6167652f75706c6f61642f775f3430302f76313538363031353039342f73617572616268323031392f746578742d746f2d68616e6477726974696e672d7469746c652e706e67" /> 
+<br/><b><a href="https://mandbadak.live/">https://mandbadak.live/</a></b><br/><br/><img alt="NPM Version" src="https://img.shields.io/github/package-json/v/itsvedantz/text-to-handwriting?style=for-the-badge&labelColor=black&logo=npm&color=darkred" /> <a href="#contributing"><img alt="Contributions Welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen?style=for-the-badge&labelColor=black&logo=github"></a> <br/><a href="https://github.com/itsvedantz/handwriter/blob/master/LICENSE"> <img alt="GitHub License MIT" src="https://img.shields.io/github/license/itsvedantz/text-to-handwriting?style=for-the-badge&labelColor=black&logo=github"> </a></a><br/><br/> I hate writing assignments so I made this tool that converts text to an image that looks like handwriting😛
 
 </p>
 
@@ -10,9 +10,7 @@
 
 <img width="400" alt="Sample image of output" src="sample.jpeg" />
 
-## 🤗 Contributing
 
-Checkout [Contribution Guide](CONTRIBUTING.md) for local setup and contribution guide.
 
 ## 📚 Libraries used
 
@@ -23,7 +21,7 @@ Checkout [Contribution Guide](CONTRIBUTING.md) for local setup and contribution 
 
 ---
 
-[<img alt="Buy me a Coffee Button" width=200 src="https://c5.patreon.com/external/logo/become_a_patron_button.png">](https://www.patreon.com/bePatron?u=31891872) &nbsp; [<img alt="Buy me a Coffee Button" width=200 src="https://cdn.buymeacoffee.com/buttons/default-yellow.png">](https://www.buymeacoffee.com/vedant)
+
 
 Bye!
 Have fun 🦄

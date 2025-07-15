@@ -79,7 +79,7 @@ export async function generateImages() {
         wordCount++;
       }
       paperContentEl.innerHTML = wordString;
-      wordCount--;
+      wordCount -= 2;
       pageEl.scrollTo(0, 0);
       await convertDIVToImage();
       paperContentEl.innerHTML = initialPaperContent;

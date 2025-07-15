@@ -1,0 +1,194 @@
+/* General Body and Container Styling */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('../images/background.jpg') no-repeat center center/cover;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Login Card Styling */
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo and Header Styling */
+.logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-family: 'Pacifico', cursive;
+  color: #4caf50; /* A pleasant green */
+  margin-bottom: 10px;
+  font-size: 2.2em;
+}
+
+p {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 1.1em;
+}
+
+/* Input Group Styling */
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+
+.input-group input {
+  width: calc(100% - 20px);
+  padding: 12px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
+  outline: none;
+}
+
+/* Button Styling */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.primary-btn {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.primary-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.google-btn {
+  background-color: #db4437; /* Google's red */
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.google-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+/* Separator Styling */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 30px 0;
+  color: #aaa;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #eee;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+/* Footer Links */
+.footer-links {
+  margin-top: 30px;
+  font-size: 0.95em;
+}
+
+.footer-links a {
+  color: #4caf50;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #45a049;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .login-card {
+    margin: 20px;
+    padding: 30px 20px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+}
