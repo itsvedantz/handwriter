@@ -118,8 +118,8 @@ p {
 }
 
 .google-btn {
-  background-color: #db4437; /* Google's red */
-  color: white;
+  background-color: #e5b9a8; /* Google's red */
+  color: rgb(1, 1, 1);
   font-weight: bold;
   margin-top: 20px;
 }

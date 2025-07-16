@@ -41,6 +41,7 @@
     }
   },
   "dependencies": {
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "bcryptjs": "^3.0.2",
     "connect-ensure-login": "^0.1.1",
     "express": "^5.1.0",
