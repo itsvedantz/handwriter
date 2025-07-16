@@ -1,4 +1,3 @@
-
 const connectorConfig = {
   connector: 'default',
   service: 'handwriter',
