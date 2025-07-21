@@ -491,6 +491,19 @@
           window.location.href = "index.html";
         }
       });
+
+      const logoutButton = document.getElementById('logout-button');
+      if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+          auth.signOut().then(() => {
+            // Sign-out successful.
+            window.location.href = "index.html";
+          }).catch((error) => {
+            // An error happened.
+            console.error("Logout Error:", error);
+          });
+        });
+      }
     </script>
     <script type="module" src="js/app.mjs"></script>
     <script defer src="https://unpkg.com/jspdf@^1/dist/jspdf.min.js"></script>
