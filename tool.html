@@ -264,11 +264,13 @@
         }
 
         .tool-nav-button.active {
-            @apply bg-indigo-600 text-white;
+            background-color: #4f46e5; /* Tailwind bg-indigo-600 */
+            color: #fff; /* Tailwind text-white */
         }
 
         html.dark .tool-nav-button.active {
-            @apply dark:bg-indigo-700 dark:text-white;
+            background-color: #3730a3 !important; /* Tailwind dark:bg-indigo-700 */
+            color: #fff !important; /* Tailwind dark:text-white */
         }
 
         .pdf-thumbnail-item {

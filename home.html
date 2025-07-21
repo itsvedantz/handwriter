@@ -29,7 +29,7 @@
     />
     <meta
       name="keywords"
-      content="text to handwriting, text-to-handwrting, saurabh text to handwriting, convert text to image, write assignment online"
+      content="text to handwriting, text-to-handwrting, vedant text to handwriting, convert text to image, write assignment online"
     />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="author" content="Vedant Mohite" />
@@ -467,6 +467,30 @@
       src="./js/vendors/html2canvas.min.js"
       crossorigin="anonymous"
     ></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAXC10Z6hsCmH7MknRtAwnjzXsoSecpEyE",
+        authDomain: "handwriter-e701a.firebaseapp.com",
+        projectId: "handwriter-e701a",
+        storageBucket: "handwriter-e701a.firebasestorage.app",
+        messagingSenderId: "132314462200",
+        appId: "1:132314462200:web:b6a4cf66ba3ff04f8cc80d"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          window.location.href = "index.html";
+        }
+      });
+    </script>
     <script type="module" src="js/app.mjs"></script>
     <script defer src="https://unpkg.com/jspdf@^1/dist/jspdf.min.js"></script>
     <script>

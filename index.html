@@ -1,143 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Text to Handwriting</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <div class="login-card" id="login">
-        <img
-          src="images/apple-touch-icon.png"
-          alt="Text to Handwriting Logo"
-          class="logo"
-        />
-        <h2>Welcome Back!</h2>
-        <p>Log in to convert your text into beautiful handwriting.</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwriter Website | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Roboto+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative">
+    <!-- Background Elements -->
+    <div class="binary-code top-10 left-20">01010100 01101000 01101001 01110011 00100000 01101001 01110011 00100000 01001000 01100001 01101110 01100100 01110111 01110010 01101001 01110100 01100101 01110010</div>
+    <div class="binary-code bottom-20 right-40">01101100 01101111 01100111 01101001 01101110 00100000 01110011 01111001 01110011 01110100 01100101 01101101</div>
+    <div class="binary-code top-1/2 left-1/3">01001000 01100001 01101110 01100100 01110111 01110010 01101001 01110100 01100101 01110010 00100000 01010111 01100101 01100010 01110011 01101001 01110100 01100101</div>
+    
+    <!-- Floating Shapes -->
+    <div class="floating-shape shape-1 pulse"></div>
+    <div class="floating-shape shape-2 pulse" style="animation-delay: 1s;"></div>
 
-        <form id="loginForm">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-          <button type="submit" class="btn primary-btn">Log In</button>
+    <!-- Main Login/Signup Container -->
+    <div class="login-container rounded-2xl p-8 w-full max-w-md relative overflow-hidden">
+        <!-- Glow Effect -->
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-900/20 to-pink-900/20 pointer-events-none"></div>
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-purple-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+                <h1 class="text-3xl font-bold gradient-text">
+                    Handwriter<span class="typing-effect">_</span>
+                </h1>
+            </div>
+            <p class="text-sm text-gray-400">Text To Handwriting</p>
+        </div>
+
+        <!-- Login Form (Initially visible) -->
+        <form id="loginForm" class="space-y-6">
+            <!-- Email Field -->
+            <div class="space-y-2">
+                <label for="loginEmail" class="text-sm font-medium text-gray-300">EMAIL</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <input id="loginEmail" name="email" type="email" autocomplete="email" required 
+                        class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                        placeholder="itsvedant@handwriter.com">
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="space-y-2">
+                <label for="loginPassword" class="text-sm font-medium text-gray-300">PASSWORD</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <input id="loginPassword" name="password" type="password" autocomplete="current-password" required 
+                        class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me-login" name="remember-me" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-700 bg-gray-800 rounded">
+                    <label for="remember-me-login" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                </div>
+                <a href="#" class="decoration-line text-sm text-purple-400 hover:text-purple-300 transition-colors">Forgot password?</a>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" 
+                    class="btn-primary w-full py-3 px-4 rounded-lg text-white font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <span id="loginText">SIGN IN</span>
+                <span id="loginSpinner" class="hidden ml-2">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </span>
+            </button>
+            <div id="loginError" class="text-red-400 text-sm mt-2 hidden"></div>
+
+            <!-- Google Login -->
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-700"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-gray-900 text-gray-400">OR CONTINUE WITH</span>
+                </div>
+            </div>
+            <button id="googleLogin" type="button" 
+                    class="btn-google w-full py-3 px-4 rounded-lg text-white font-medium flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Google
+            </button>
+
+            <!-- Create Account Link -->
+            <div class="text-center text-sm text-gray-400">
+                New to Handwriter? <a href="#" id="showSignupForm" class="decoration-line text-purple-400 hover:text-purple-300 transition-colors">Create account</a>
+            </div>
         </form>
 
-        <div class="separator">
-          <span>OR</span>
-        </div>
+        <!-- Signup Form (Initially hidden) -->
+        <form id="signupForm" class="space-y-6 hidden">
+            <!-- Name Field -->
+            <div class="space-y-2">
+                <label for="signupName" class="text-sm font-medium text-gray-300">FULL NAME</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <input id="signupName" name="name" type="text" autocomplete="name" required 
+                        class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                        placeholder="Vedant Mohtie">
+                </div>
+            </div>
+            
+            <!-- Email Field -->
+            <div class="space-y-2">
+                <label for="signupEmail" class="text-sm font-medium text-gray-300">EMAIL</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <input id="signupEmail" name="email" type="email" autocomplete="email" required 
+                        class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                        placeholder="developer@handwriter.com">
+                </div>
+            </div>
 
-        <div class="btn google-btn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            x="0px"
-            y="0px"
-            width="48"
-            height="48"
-            viewBox="0 0 48 48"
-          >
-            <path
-              fill="#FFC107"
-              d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
-            ></path>
-            <path
-              fill="#FF3D00"
-              d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-            ></path>
-            <path
-              fill="#4CAF50"
-              d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-            ></path>
-            <path
-              fill="#1976D2"
-              d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C39.901,36.626,44,30.638,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-            ></path>
-          </svg>
-          Continue with Google
-        </div>
+            <!-- Password Field -->
+            <div class="space-y-2">
+                <label for="signupPassword" class="text-sm font-medium text-gray-300">PASSWORD</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <input id="signupPassword" name="password" type="password" autocomplete="new-password" required 
+                        class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                        placeholder="••••••••">
+                </div>
+            </div>
 
-        <div class="footer-links">
-          <a href="#forgot">Forgot Password?</a>
-          <a href="#signup">Don't have an account? Sign Up</a>
-        </div>
-      </div>
+            <!-- Remember Me & Forgot Password (for signup, can be removed if not needed) -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me-signup" name="remember-me" type="checkbox" class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-700 bg-gray-800 rounded">
+                    <label for="remember-me-signup" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                </div>
+                <a href="#" class="decoration-line text-sm text-purple-400 hover:text-purple-300 transition-colors">Forgot password?</a>
+            </div>
 
-      <div class="login-card" id="signup" style="display: none;">
-        <h2>Create Account</h2>
-        <p>Sign up to start converting your text.</p>
+            <!-- Signup Button -->
+            <button type="submit" 
+                    class="btn-primary w-full py-3 px-4 rounded-lg text-white font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <span id="signupText">SIGN UP</span>
+                <span id="signupSpinner" class="hidden ml-2">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </span>
+            </button>
+            <div id="signupError" class="text-red-400 text-sm mt-2 hidden"></div>
 
-        <form id="registerForm">
-          <div class="input-group">
-            <label for="new-email">Email</label>
-            <input
-              type="email"
-              id="new-email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="new-password">Password</label>
-            <input
-              type="password"
-              id="new-password"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-          <button type="submit" class="btn primary-btn">Sign Up</button>
+            <!-- Google Login (for signup) -->
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-700"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-gray-900 text-gray-400">OR CONTINUE WITH</span>
+                </div>
+            </div>
+            <button id="googleSignup" type="button" 
+                    class="btn-google w-full py-3 px-4 rounded-lg text-white font-medium flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Google
+            </button>
+
+            <!-- Already have account link -->
+            <div class="text-center text-sm text-gray-400">
+                Already have an account? <a href="#" id="showLoginForm" class="decoration-line text-purple-400 hover:text-purple-300 transition-colors">Sign in</a>
+            </div>
         </form>
-        <div class="footer-links">
-          <a href="#login">Already have an account? Log In</a>
-        </div>
-      </div>
-
-      <div class="login-card" id="forgot" style="display: none;">
-        <h2>Forgot Password</h2>
-        <p>Enter your email to receive a password reset link.</p>
-
-        <form id="forgotForm">
-          <div class="input-group">
-            <label for="forgot-email">Email</label>
-            <input
-              type="email"
-              id="forgot-email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-          <button type="submit" class="btn primary-btn">Reset Password</button>
-        </form>
-        <div class="footer-links">
-          <a href="index.html">Back to Login</a>
-        </div>
-      </div>
     </div>
-    <script type="module" src="js/auth.mjs"></script>
-  </body>
+
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-lg p-8 max-w-sm w-full text-center">
+            <h2 class="text-2xl font-bold text-white mb-4">Account Created!</h2>
+            <p class="text-gray-400 mb-6">You can now log in with your new credentials.</p>
+            <button id="goToLoginBtn" class="btn-primary w-full py-3 px-4 rounded-lg text-white font-medium">Go to Login</button>
+        </div>
+    </div>
+
+    <!-- Firebase Config and Auth Logic -->
+    <script>
+        const firebaseConfig = {
+            apiKey: 'AIzaSyAXC10Z6hsCmH7MknRtAwnjzXsoSecpEyE',
+            authDomain: 'handwriter-e701a.firebaseapp.com',
+            projectId: 'handwriter-e701a',
+            storageBucket: 'handwriter-e701a.firebasestorage.app',
+            messagingSenderId: '132314462200',
+            appId: '1:132314462200:web:b6a4cf66ba3ff04f8cc80d'
+        };
+        
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        let isSigningUp = false;
+
+        // Auth State Listener
+        auth.onAuthStateChanged(user => {
+            if (user && !isSigningUp) {
+                window.location.href = 'home.html';
+            }
+        });
+
+        // Form toggle function
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const showSignupLink = document.getElementById('showSignupForm');
+            const showLoginLink = document.getElementById('showLoginForm');
+
+            if (showSignupLink) {
+                showSignupLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginForm.classList.add('hidden');
+                    signupForm.classList.remove('hidden');
+                });
+            }
+
+            if (showLoginLink) {
+                showLoginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    signupForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+                });
+            }
+
+            // Login Form Submission
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = loginEmail.value;
+                const password = loginPassword.value;
+                
+                loginText.classList.add('hidden');
+                loginSpinner.classList.remove('hidden');
+                
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(() => {
+                        window.location.href = 'home.html';
+                    })
+                    .catch(error => {
+                        loginError.textContent = error.message;
+                        loginError.classList.remove('hidden');
+                        loginText.classList.remove('hidden');
+                        loginSpinner.classList.add('hidden');
+                    });
+            });
+
+            // Signup Form Submission
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = signupEmail.value;
+                const password = signupPassword.value;
+                
+                isSigningUp = true;
+                signupText.classList.add('hidden');
+                signupSpinner.classList.remove('hidden');
+                
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(() => {
+                        document.getElementById('successModal').classList.remove('hidden');
+                    })
+                    .catch(error => {
+                        signupError.textContent = error.message;
+                        signupError.classList.remove('hidden');
+                        signupText.classList.remove('hidden');
+                        signupSpinner.classList.add('hidden');
+                        isSigningUp = false;
+                    });
+            });
+
+            // Google Login Handler
+            const googleLoginBtn = googleLogin || googleSignup;
+            if (googleLoginBtn) {
+                googleLoginBtn.addEventListener('click', () => {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    auth.signInWithPopup(provider)
+                        .then(() => {
+                            window.location.href = 'home.html';
+                        })
+                        .catch(error => {
+                            const errorElement = loginError || signupError;
+                            errorElement.textContent = error.message;
+                            errorElement.classList.remove('hidden');
+                        });
+                });
+            }
+
+            const goToLoginBtn = document.getElementById('goToLoginBtn');
+            goToLoginBtn.addEventListener('click', () => {
+                document.getElementById('successModal').classList.add('hidden');
+                signupForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+                isSigningUp = false;
+            });
+        });
+    </script>
+</body>
 </html>

@@ -114,13 +114,13 @@ passport.deserializeUser(async (id, done) => {
 app.get('/', (req, res) => {
   res.redirect('/home.html');
 });
-
+1
 // Define authentication routes
 app.post(
-  '/login.html',
+  '/home.html',
   passport.authenticate('local', {
     successRedirect: '/home.html',
-    failureRedirect: '/index.html'
+    failureRedirect: '/inde1x.html'
   })
 );
 
