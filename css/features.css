@@ -30,47 +30,61 @@ body.dark .dark-mode-toggle .sun {
   display: none;
 }
 
-/* Switch */
+/* === START: UPDATED SWITCH STYLES === */
 .switch-toggle {
   position: relative;
-  display: block;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
   margin-top: 6px;
-  cursor: pointer;
-  width: 50px;
-  height: 25px;
-  border-radius: 25px;
-  background-color: var(--elevation-background);
 }
 
 .switch-toggle input {
-  position: relative;
-  top: 4px;
-  left: 4px;
-  z-index: -1;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .switch-toggle div {
   position: absolute;
-  border-radius: 50%;
-  background-color: #9994;
-  transition: 0.1s ease;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
 }
 
-.switch-toggle input:focus + div {
-  outline: 1;
+.switch-toggle div:before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
 .switch-toggle input:checked + div {
-  left: 28px;
-  background-color: rgb(34, 203, 240);
+  background-color: #2196f3;
 }
 
-.switch-toggle.outer div {
-  width: 16px;
-  height: 16px;
-  top: 4px;
-  left: 5px;
+.switch-toggle input:focus + div {
+  box-shadow: 0 0 1px #2196f3;
 }
+
+.switch-toggle input:checked + div:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* === END: UPDATED SWITCH STYLES === */
 
 /* POPUP, DRAW AND PDF-PREVIEW  */
 .popup-container {

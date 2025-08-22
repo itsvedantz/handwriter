@@ -99,6 +99,62 @@ h1 {
   text-align: center;
 }
 
+/* === START: UPDATED STYLES === */
+
+/* Styling for the Handwriting Font dropdown */
+select#handwriting-font {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent
+    url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>")
+    no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 20px auto;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 30px 10px 10px;
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensure it takes full width of container */
+}
+
+select#handwriting-font:hover {
+  border-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+select#handwriting-font:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Styling for other inputs and selects in customization column */
+.customization-col input[type='number'],
+.customization-col select {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  border-radius: 0;
+  background-color: transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+  padding: 8px 5px;
+  -webkit-appearance: none; /* remove default styling */
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.customization-col input[type='number']:focus,
+.customization-col select:focus {
+  outline: none;
+  border-bottom-color: #007bff;
+  box-shadow: 0 1px 0 0 #007bff;
+}
+
+/* Keep original select styling for compatibility if needed elsewhere */
 select {
   background: url('../images/dropdown.svg') no-repeat;
   background-position: calc(100% - 14px) center;
@@ -111,6 +167,8 @@ select {
   -webkit-appearance: none;
 }
 
+/* === END: UPDATED STYLES === */
+
 option {
   color: #333;
 }
@@ -118,6 +176,21 @@ option {
 body.dark select {
   background: url('../images/dropdown-white.svg') no-repeat;
   background-position: calc(100% - 14px) center;
+}
+body.dark select#handwriting-font {
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  border-color: #09f;
+  color: #ccc;
+}
+body.dark .customization-col input[type='number'],
+body.dark .customization-col select {
+  border-bottom-color: #555;
+  color: #ccc;
+}
+body.dark .customization-col input[type='number']:focus,
+body.dark .customization-col select:focus {
+  border-bottom-color: #09f;
+  box-shadow: 0 1px 0 0 #09f;
 }
 
 input {
@@ -417,14 +490,7 @@ legend {
   color: var(--font-color-primary);
 }
 
-select,
-input {
-  width: 100%;
-  border: 1px solid var(--field-borders);
-  padding: 10px;
-  padding-right: 30px;
-  color: var(--font-color-primary);
-}
+/* Old select and input styles are now overridden by more specific ones */
 
 input[type='file']::-webkit-file-upload-button {
   display: none;
