@@ -36,7 +36,7 @@ body.dark .dark-mode-toggle .sun {
   display: inline-block;
   width: 60px;
   height: 34px;
-  margin-top: 6px;
+  margin: 0 0 0 10px;
 }
 
 .switch-toggle input {
@@ -83,6 +83,19 @@ body.dark .dark-mode-toggle .sun {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+/* Align label + status + switch on the same row */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-row label[for] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 /* === END: UPDATED SWITCH STYLES === */
 
