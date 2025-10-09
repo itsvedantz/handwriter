@@ -485,15 +485,80 @@
         </button>
       </div>
     </div>
+   <!-- Password Reset Modal -->
+    <div
+      id="passwordResetModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-gray-800 rounded-lg p-8 max-w-sm w-full text-center">
+        <h2 class="text-2xl font-bold text-white mb-4">Reset Password</h2>
+        <p id="passwordResetMessage" class="text-gray-400 mb-6">
+          Enter your email address and we will send you a link to reset your
+          password.
+        </p>
+        <form id="passwordResetForm" class="space-y-6">
+          <div class="space-y-2">
+            <label
+              for="passwordResetEmail"
+              class="text-sm font-medium text-gray-300"
+              >EMAIL</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 text-purple-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <input
+                id="passwordResetEmail"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="input-field py-3 px-4 pl-10 block w-full rounded-lg text-white placeholder-gray-500 focus:ring-0"
+                placeholder="itsvedant@handwriter.com"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn-primary w-full py-3 px-4 rounded-lg text-white font-medium"
+          >
+            Send Reset Link
+          </button>
+        </form>
+        <button
+          id="closePasswordResetModal"
+          class="mt-4 text-sm text-gray-400 hover:text-gray-300"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
 
     <!-- Firebase Auth -->
-    <script type="module">
-      import {
+    <script src="js/auth.js"></script>
+    <script>
+      const {
         signInWithGoogle,
         signUpWithEmail,
         signInWithEmail,
-        checkAuthState
-      } from './js/auth.mjs';
+        checkAuthState,
+        sendPasswordReset
+      } = window.authService;
 
       checkAuthState(); // Call checkAuthState on page load
 
@@ -586,6 +651,56 @@
           document.querySelector('#signupForm').classList.add('hidden');
           document.querySelector('#loginForm').classList.remove('hidden');
         });
+
+      // Password Reset
+      const passwordResetModal = document.querySelector('#passwordResetModal');
+      const closePasswordResetModal = document.querySelector(
+        '#closePasswordResetModal'
+      );
+      const passwordResetForm = document.querySelector('#passwordResetForm');
+      const passwordResetEmailInput = document.querySelector(
+        '#passwordResetEmail'
+      );
+      const passwordResetMessage = document.querySelector(
+        '#passwordResetMessage'
+      );
+
+      document
+        .querySelector('#forgotPasswordLogin')
+        .addEventListener('click', (e) => {
+          e.preventDefault();
+          passwordResetModal.classList.remove('hidden');
+        });
+
+      document
+        .querySelector('#forgotPasswordSignup')
+        .addEventListener('click', (e) => {
+          e.preventDefault();
+          passwordResetModal.classList.remove('hidden');
+        });
+
+      closePasswordResetModal.addEventListener('click', () => {
+        passwordResetModal.classList.add('hidden');
+        passwordResetMessage.textContent =
+          'Enter your email address and we will send you a link to reset your password.';
+        passwordResetMessage.classList.remove('text-green-400');
+        passwordResetForm.classList.remove('hidden');
+      });
+
+      passwordResetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = passwordResetEmailInput.value;
+        const result = await sendPasswordReset(email);
+        if (result.success) {
+          passwordResetMessage.textContent =
+            'Password reset email sent! Please check your inbox.';
+          passwordResetMessage.classList.add('text-green-400');
+          passwordResetForm.classList.add('hidden');
+        } else {
+          passwordResetMessage.textContent = result.error;
+          passwordResetMessage.classList.add('text-red-400');
+        }
+      });
     </script>
   </body>
 </html>
