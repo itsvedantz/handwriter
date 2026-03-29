@@ -254,6 +254,7 @@ ul.info-ul > li {
   background-color: var(--primary-button-bg);
   color: var(--primary-button-color);
   font-size: 1rem;
+  padding: 17px 80px;
 }
 .github-corner {
   position: absolute;
